@@ -127,8 +127,32 @@ void ex15_DesafioD() {
     scanf("%d/%d/%d", &dia,&mes,&ano);
 
     switch (mes) {
-        case 1 ... 12:
-            mes_formated = 'Janeiro';
+        case 1:
+            strcpy(mes_formated, "Janeiro"); break;
+        case 2:
+            strcpy(mes_formated, "Fevereiro"); break;
+        case 3:
+            strcpy(mes_formated, "Marco"); break;
+        case 4:
+            strcpy(mes_formated, "Abril"); break;
+        case 5:
+            strcpy(mes_formated, "Maio"); break;
+        case 6:
+            strcpy(mes_formated, "Junho"); break;
+        case 7:
+            strcpy(mes_formated, "Julho"); break;
+        case 8:
+            strcpy(mes_formated, "Agosto"); break;
+        case 9:
+            strcpy(mes_formated, "Setembro"); break;
+        case 10:
+            strcpy(mes_formated, "Outubro"); break;
+        case 11:
+            strcpy(mes_formated, "Novembro"); break;
+        case 12:
+            strcpy(mes_formated, "Dezembro"); break;
+        default:
+            strcpy(mes_formated, "Invalid"); break;
     }
 
     printf("%d de %s de %d", dia,mes_formated,ano);
