@@ -272,7 +272,7 @@ void ex15_DesafioD() {
 int main() {
     setlocale(LC_ALL,"portuguese");
 
-    ex12();
+    ex15_DesafioB();
 
     return 0;
 }
