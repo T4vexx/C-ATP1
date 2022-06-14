@@ -43,9 +43,105 @@ void ex2() {
 
 }
 
+void ex3() {
+ /*
+    Escreva um programa em linguagem C para que usuário forneça 10 valores inteiros. O
+    programa deve permitir entradas de valores maiores que 0. Os primeiros cinco valores devem
+    ser armazenados em um vetor A e os demais em um vetor B. Em seguida, o programa deve
+    efetuar a troca dos valores existentes em A e B, considerando a regra: o valor da última posição
+    do vetor A é trocado com o valor da primeira posição do vetor B, o valor da penúltima posição
+    do vetor A é trocado com o valor da segunda posição do vetor B e assim sucessivamente. Esse
+    processo deve ser realizado por meio de estruturas de repetições.
+ */
+    int v[5],v2[5],num;
+
+    printf("Digite dez numeros maiores que 0:\n");
+
+    for (int i = 0; i < 10; i++) {
+        do {
+            scanf(" %d", &num);
+            if(num<0)
+                printf("Digite valores maiores que 0\n");
+        } while (num<0);
+        
+        if ( i > 4 ) {
+            v2[i-5] = num;
+        } else {
+            v[i] = num;
+        }
+    }
+
+    printf("Primeiro analise\n");
+    for (int i = 0; i < 5; i++) {
+        
+        printf("V1[%d] = %d / V2[%d] = %d\n", i, v[i], i, v2[i]);
+    }
+
+    printf("\nSegunda analise\n");
+    for (int i = 0; i < 5; i++) {
+        num = v[i];
+        v[i] = v2[4-i];
+        v2[4-i] = num;
+    }
+
+    for (int i = 0; i < 5; i++) {
+        printf("V1[i] = %d / V2[i] = %d\n", v[i], v2[i]);
+    }
+}
+
+void ex4() {
+/*
+    Escreva um programa em linguagem C para que usuário forneça cinco valores inteiros. O
+    programa deve permitir entradas de valores maiores que 0. Os primeiros cinco valores devem
+    ser armazenados em um vetor A e os demais em um vetor B. Em seguida, o programa deve
+    efetuar a multiplicação entre os valores disponíveis em A e B, armazenando o resultado em um
+    terceiro vetor C. As posições devem ser multiplicadas de maneira invertida, ou seja, a primeira posição do
+    vetor A deve ser multiplicada pela última posição do vetor B. O resultado deve ser armazenado
+    na última posição do vetor C. Esse processo deve ser realizado por meio de estruturas de
+    repetições.
+*/
+    int v[5],v2[5],v3[5],num;
+
+    printf("Digite dez numeros maiores que 0:\n");
+
+    for (int i = 0; i < 10; i++) {
+        do {
+            scanf(" %d", &num);
+            if(num<0)
+                printf("Digite valores maiores que 0\n");
+        } while (num<0);
+        
+        if ( i > 4 ) {
+            v2[i-5] = num;
+        } else {
+            v[i] = num;
+        }
+    }
+
+    for (int i = 0; i < 5; i++) {
+        v3[4-i] = v[i] * v2[4-i];
+    }
+
+    for (int i = 0; i < 5; i++) {
+        printf("V1[i] = %d / V2[i] = %d / V3[i] = v1 * v2 = %d\n", v[i], v2[i], v3[i]);
+    }
+}
+
+void ex5() {
+/*
+    Escreva um programa para simular as operações de uma pilha (First in last out - FILO), com
+    10 posições. O primeiro elemento a ser empilhado é o último a ser retirado da pilha. Este tipo de
+    estrutura é comumente utilizado para gerenciar chamadas de funções, por exemplo. O programa
+    deve ter as operações de inserção e remoção. O processo de remoção não é físico. Uma
+    remoção deve ser controlada por uma indicação lógica.
+*/
+
+
+}
+
 int main() {
 
-    ex2();
+    ex5();
 
     return 0;
 }
