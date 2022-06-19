@@ -135,8 +135,44 @@ void ex5() {
     deve ter as operações de inserção e remoção. O processo de remoção não é físico. Uma
     remoção deve ser controlada por uma indicação lógica.
 */
+    int v[10],opc,position=0,value;
+    printf("\t\tFila teste\n");
 
+    do{
+        printf("Digite 0 para excluir e 1 para adicionar e 2 para visualizar");
+        scanf("%d", &opc);
+        
+        if(opc==1) {
+            if (position <= 9) {
+                printf("digite o valor desejado para adicionar na fila: ");
+                scanf("%d", &value);
 
+                v[position] = value;
+                position++;
+            } else {
+                printf("Pilha cheia");
+            }
+        } else if(opc==2) {
+            if (position>0) {
+                printf("v[%d] = %d\n", position-1, v[position-1]);
+            } else {
+                printf("pilha vazia");
+            }
+        } else {
+            if (position>0) {
+                position--;
+            } else {
+                printf("Pilha vazia");
+            }
+            
+        }
+
+    }while(opc==1 || opc==0 || opc==2 || opc==3);
+
+}
+
+void ex6() {
+    
 }
 
 int main() {
