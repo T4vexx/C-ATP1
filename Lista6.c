@@ -60,6 +60,8 @@ void ex142(){
     for(int y = 0; y < 7; y++){
       if(x==y){
         printf(" \t ");
+      } else if (x>y) {
+        printf(" \t ");
       } else {
         printf(" \t%d",cities[x][y]);
       }
@@ -72,17 +74,50 @@ void ex142(){
 void ex143(){
   int cities[d][d]={{0,2,11,6,15,11,1},{2,0,7,12,4,2,15},{11,7,0,11,8,3,13},{6,12,11,0,10,2,1},{15,4,8,10,0,5,13},{11,2,3,2,5,0,14},{1,15,13,1,13,14,0}},cita,citb;
 
-  do{
-    if(cita==0 && citb==0){
-      printf("digite 2 valores de origem e destino: ");
-      scanf("%d %d")
+  // do{
+  //   if(cita==0 && citb==0){
+  //     printf("digite 2 valores de origem e destino: ");
+  //     scanf("%d %d")
+  //   }
+  // }while();
+}
+
+void desafio1() {
+  int A[3][3],counter=1;
+
+  for(int l = 0; l < 3; l++){
+    for(int c = 0; c < 3; c++){
+      A[l][c] = l+c;
     }
-  }while();
+  }
+
+  printf("Diagonal principal: \n");
+
+  for(int l = 0; l < 3; l++){
+    for(int c = 0; c < 3; c++){
+      if (l == c) {
+        for(int cont = 0; cont < counter; cont++) {
+          printf(" ");
+        }
+        printf("%d",A[l][c]);
+        puts("\n");	
+        counter++;
+      }
+    }
+  }
+  printf("\nMatrix: \n");
+  for(int l = 0; l < 3; l++){
+    for(int c = 0; c < 3; c++){
+      printf("%d ",A[l][c]);
+    }
+    printf("\n");
+  }
+
 }
 
 int main() {
 
-  ex24e25();
+  ex142();
 
   return 0;
 }

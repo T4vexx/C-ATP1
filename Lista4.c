@@ -46,17 +46,17 @@ void ex8() {
 }
 
 void ex9() {
-    int i, fib1 = 1, fib2 = 1, soma;   
+    int i, fib1 = 1, fib2 = 0, soma;   
 
-    printf("%d %d",fib1,fib2);
+    printf("%d ",fib1);
 
-    for (i = 2; i < 15; i++) {                                        
+    for (i = 1; i < 15; i++) {                                        
         soma = fib1 + fib2;  
 
         fib2 = fib1;                           
         fib1 = soma; 
 
-        printf(" %d",soma);                          
+        printf("%d ",soma);                          
     } 
 
 }
@@ -272,7 +272,7 @@ void ex15_DesafioD() {
 int main() {
     setlocale(LC_ALL,"portuguese");
 
-    ex15_DesafioB();
+    ex9();
 
     return 0;
 }
