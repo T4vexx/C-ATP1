@@ -4,12 +4,21 @@
 #include <string.h>
 
 #define ex4_const 10
-#define ex5_const 3 // trocar por 40
+#define ex5_const 40 
+#define ex6_const 6
+#define ex7_const 3
 
 typedef struct Pontos {
         int x;
         int y;
 } TPontos;
+
+typedef struct Produto {
+    char name[50];
+    int codigo;
+    float preco;
+    int baixa[ex6_const];
+} TProduto;
 
 void ex1() {
   struct aluno {
@@ -135,47 +144,126 @@ void ex5() {
         char nome[50];
         Tdnasc data;
     } pessoas[ex5_const];
-    int index_velha,flag;
+    int index_velha,idade_velho,idade,mesDia_velho[2] = {0,0};
 
     for (int i = 0; i < ex5_const; i++) {
-        puts("Digite o nome: ");
+        puts("\nDigite o nome: ");
         fflush(stdin);
         gets(pessoas[i].nome);
 
-        puts("Digite a idade formatada DD/MM/YYYY: ");
+        puts("\nDigite a idade formatada DD/MM/YYYY: ");
         fflush(stdin);
         scanf(" %d/%d/%d", &pessoas[i].data.dia,&pessoas[i].data.mes,&pessoas[i].data.ano);
 
-        if (i == 0) {
-            index_velha = 0;
-        } else {
-            if (pessoas[i].data.ano < pessoas[index_velha].data.ano) {
-                flag = 1;
-                puts("ano Menor");
-            } else if (pessoas[i].data.ano == pessoas[index_velha].data.ano) {
-                if (pessoas[i].data.mes < pessoas[index_velha].data.mes) {
-                    flag = 1;
-                    puts("mes Menor");
-                } else if (pessoas[i].data.mes == pessoas[index_velha].data.mes) {
-                    if (pessoas[i].data.dia < pessoas[index_velha].data.dia) {
-                        flag = 1;
-                        puts("dia Menor");
-                    }
-                }else {
-                    flag == 0;
-                }
-            } else {
-                flag == 0;
+        idade = 2022 - pessoas[i].data.ano;
+
+        if (pessoas[i].data.mes > 7) {
+            idade = idade - 1;
+        } else if (pessoas[i].data.mes == 7) {
+            if (pessoas[i].data.dia > 7) {
+                idade = idade - 1;
             }
+        } else {  
         }
 
-        if (flag == 1) {
-            index_velha = i;
+        if (i == 0) {
+            index_velha = 0;
+            idade_velho = idade;
+            mesDia_velho[0] = pessoas[i].data.dia;
+            mesDia_velho[1] = pessoas[i].data.mes;
+        } else {
+            if (idade > idade_velho) {
+                idade_velho = idade;
+                index_velha = i;
+                mesDia_velho[0] = pessoas[i].data.dia;
+                mesDia_velho[1] = pessoas[i].data.mes;
+            } else if (idade == idade_velho) {
+                if (pessoas[i].data.mes < mesDia_velho[1]) {
+                    idade_velho = idade;
+                    index_velha = i;
+                    mesDia_velho[0] = pessoas[i].data.dia;
+                    mesDia_velho[1] = pessoas[i].data.mes;
+                } else if (pessoas[i].data.mes == mesDia_velho[1]) {
+                    if (pessoas[i].data.dia < mesDia_velho[0]) {
+                        idade_velho = idade;
+                        index_velha = i;
+                        mesDia_velho[0] = pessoas[i].data.dia;
+                        mesDia_velho[1] = pessoas[i].data.mes;
+                    }
+                }
+            }
+        }
+        printf("\nO(a) %s tem %d anos",pessoas[i].nome,idade);
+    }
+    printf("\nA mais velha e %s e tem %d", pessoas[index_velha].nome,idade_velho);
+}
+
+void ex6() {
+    TProduto produto;
+    int soma=0;
+
+    puts("Digite o nome do produto: ");
+    gets(produto.name);
+
+    puts("Digite o codigo do produto: ");
+    scanf(" %d", &produto.codigo);
+
+    puts("Digite o preço do produto: ");
+    scanf(" %f", &produto.preco);
+
+    for (int i = 0; i < ex6_const; i++) {
+        printf("Digite o registro do produto no dia %d da semana\n", i+1);
+        scanf(" %d", &produto.baixa[i]);
+
+        soma = soma + produto.baixa[i];
+    }
+
+    printf("\n\nCodigo do produto ...: %d",produto.codigo);
+    printf("\nPreço do produto ...: %f",produto.preco);
+    printf("\nO produto %s teve %d baixas na semana, que geraram %f de receita", produto.name,soma, soma*produto.preco);
+    printf("\nAs baixas para os dias da semana são: ");
+    for (int i = 0; i < ex6_const; i++) {
+        printf("\n dia %d: %d", i+1, produto.baixa[i]);
+    }
+}
+
+void ex7() {
+    TProduto produtos[ex7_const];
+    int soma=0;
+
+    for (int i = 0; i < ex7_const; i++) {
+        puts("Digite o nome do produto: ");
+        fflush(stdin);
+        gets(produtos[i].name);
+
+        puts("Digite o codigo do produto: ");
+        fflush(stdin);
+        scanf(" %d", &produtos[i].codigo);
+
+        puts("Digite o preço do produto: ");
+        fflush(stdin);
+        scanf(" %f", &produtos[i].preco);
+
+        for (int j = 0; j < ex6_const; j++) {
+            printf("Digite o registro do produto [%d] no dia %d da semana\n", i,j+1);
+            fflush(stdin);
+            scanf(" %d", &produtos[i].baixa[j]);
         }
     }
 
-    printf("A mais velha e %s", pessoas[index_velha].nome);
+    for (int i = 0; i < ex7_const; i++) {
+        printf("\n\nNome do produto %d ...: %s",i,produtos[i].name);
+        printf("\nCodigo do produto %d ...: %d",i,produtos[i].codigo);
+        printf("\nPreço do produto %d ...: %f",i,produtos[i].preco);
+        printf("\nAs baixas para os dias da semana são: ");
+        for (int j = 0; j < ex6_const; j++) {
+            printf("\n dia %d: %d", j+1, produtos[i].baixa[j]);
+        }
+    }
+}
 
+void ex8() {
+    
 }
 
 void ex11() {
@@ -261,7 +349,7 @@ void ex13()  {
 }
 
 int main() {
-    ex5();
+    ex7();
 
     return 0;
 }
