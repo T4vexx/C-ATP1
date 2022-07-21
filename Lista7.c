@@ -6,7 +6,10 @@
 #define ex4_const 10
 #define ex5_const 40 
 #define ex6_const 6
-#define ex7_const 3
+#define ex7_const 20
+#define ex8_const 20
+#define ex10_const 2
+
 
 typedef struct Pontos {
         int x;
@@ -19,6 +22,11 @@ typedef struct Produto {
     float preco;
     int baixa[ex6_const];
 } TProduto;
+
+typedef struct tempo {
+    int hour;
+    int min;
+} TTempo;
 
 void ex1() {
   struct aluno {
@@ -263,7 +271,199 @@ void ex7() {
 }
 
 void ex8() {
+    typedef struct Dnasc {
+        int dia;
+        int mes;
+        int ano;
+    } TDnasc;
+    typedef struct Cliente {
+        char nome[30];
+        char sobrenome[30];
+        char sexo;
+    } TCliente;
+    struct Contas {
+        int numero_conta;
+        TDnasc data;
+        TCliente cliente;
+        float saldo;
+        float limite_x;
+    } contas[ex8_const];
+
+    int antigo_index=0,limitex_index=0,counter_m=0,counter_h=0,v_indexs[ex8_const],elemento_aux=0,i;
+    float medio_M=0,medio_H=0,maior_M=0,maior_H=0,menor_M=0,menor_H=0;
+
+    srand(time(NULL));
     
+    for(int i=0; i<ex8_const; i++) {
+        puts("Digite o nome");
+        fflush(stdin);
+        gets(contas[i].cliente.nome);
+        puts("Digite o sobrenome");
+        fflush(stdin);
+        gets(contas[i].cliente.sobrenome);
+        puts("Digite o sexo H | M");
+        fflush(stdin);
+        scanf("%c", &contas[i].cliente.sexo);
+        contas[i].numero_conta = (rand() % 5000) + 1000;
+        puts("Digite a data de abertura: DD/MM/YYYY");
+        fflush(stdin);
+        scanf("%d/%d/%d", &contas[i].data.dia, &contas[i].data.mes,&contas[i].data.ano);
+        puts("Digite o saldo");
+        fflush(stdin);
+        scanf("%f", &contas[i].saldo);
+        puts("Digite o valor do limite especial");
+        fflush(stdin);
+        scanf("%f", &contas[i].limite_x);
+        
+        if (i==0) {
+            if(contas[i].cliente.sexo == 'H') {
+                medio_H = medio_H + contas[i].saldo;
+                counter_h++;
+                maior_H = contas[i].saldo;
+                menor_H = contas[i].saldo;
+            } else {
+                medio_M = medio_M + contas[i].saldo;
+                counter_m++;
+                maior_M = contas[i].saldo;
+                menor_M = contas[i].saldo;
+            }
+        } else {
+            if(contas[i].cliente.sexo == 'H') {
+                medio_H = medio_H + contas[i].saldo;
+                counter_h++;
+                    if (contas[i].saldo > maior_H) {
+                        maior_H = contas[i].saldo;
+                    }
+                    if (contas[i].saldo < menor_H) {
+                        menor_H = contas[i].saldo;
+                    }
+            } else {
+                medio_M = medio_M + contas[i].saldo;
+                counter_m++;
+                    if (contas[i].saldo > maior_M) {
+                        maior_M = contas[i].saldo;
+                    }
+                    if (contas[i].saldo < menor_M) {
+                        menor_M = contas[i].saldo;
+                    }
+            }
+        }
+
+        //comparação da data
+        if (contas[i].data.ano < contas[antigo_index].data.ano) {
+        antigo_index = i;
+        } else if (contas[i].data.ano == contas[antigo_index].data.ano) {
+        if (contas[i].data.mes < contas[antigo_index].data.mes) {
+            antigo_index = i;
+        } else if (contas[i].data.mes == contas[antigo_index].data.mes) {
+            if (contas[i].data.dia < contas[antigo_index].data.dia) {
+            antigo_index = i;
+            }
+        }
+        }
+
+        //calulo do maior limite especial
+        if(i!=0) {
+        if(contas[i].limite_x > contas[limitex_index].limite_x) {
+            limitex_index = i;
+        }
+        }
+
+    }
+    medio_M = medio_M / counter_m;
+    medio_H = medio_H / counter_h;
+  
+  
+    printf("\n\nImpressoes");
+    printf("\nA media salarial feminina ...: %f",medio_M);
+    printf("\nA media salarial masculina ...: %f",medio_H);
+    printf("\nO maior e o menor saldo masculino %f | %f",maior_H,menor_H);
+    printf("\nO maior e o menor saldo feminino %f | %f",maior_M,menor_M);
+    printf("\nO cliente mais antigo ...: %s",contas[antigo_index].cliente.nome);
+    printf("\nO cliente com o maior limite especial ...: %s | %f",contas[limitex_index].cliente.nome,contas[limitex_index].limite_x);
+
+    for(int i = 0; i < ex8_const; i++) {
+        if (contas[i].saldo < 0) {
+        printf("\nO cliente %s tem %f de debito na conta",contas[i].cliente.nome,contas[i].saldo);
+        }
+        v_indexs[i] = i;
+    }
+
+    for (int k = 1; k < ex8_const; k++) {
+        elemento_aux = v_indexs[k];
+        for (i = k-1; i >= 0 && contas[k].saldo < contas[i].saldo ; i--) {
+            v_indexs[i+1] = v_indexs[i];
+        }
+        v_indexs[i+1] = elemento_aux;
+    }
+
+    for (int c = 0; c < ex8_const; c++) {
+        printf("\n%s tem R$ %f",contas[v_indexs[(ex8_const-1)-c]].cliente.nome, contas[v_indexs[(ex8_const-1)-c]].saldo);
+    }
+}
+
+void ex9() {
+    // Vou perguntar dpsss
+}
+
+void ex10() {
+    struct cliente {
+        char codigo[10];
+        char email[50];
+        float horas;
+        char paginas;
+        float conta;
+    } clientes[ex10_const];
+
+    float aux=0,count=0,soma_valores=0;
+
+    for(int i = 0; i < ex10_const; i++) {
+        puts("Digite o codigo do cliente");
+        fflush(stdin);
+        gets(clientes[i].codigo);
+
+        puts("Digite o email do cliente");
+        fflush(stdin);
+        gets(clientes[i].email);
+
+        puts("Digite o tanto de horas de uso");
+        fflush(stdin);
+        scanf("%f", &clientes[i].horas);
+
+        puts("O cliente possui paginas: S | N");
+        fflush(stdin);
+        scanf("%c", &clientes[i].paginas);
+
+        if(clientes[i].horas > 20) {
+            aux = clientes[i].horas - 20;
+            count = 0;
+            do {
+                aux = aux - 1;
+                count++;
+            }while(aux > 0);
+
+            clientes[i].conta = 35 + (count * 2.5);
+
+        } else if(clientes[i].horas <= 20) {
+            clientes[i].conta = 35;
+        }
+
+        if(clientes[i].paginas == 'S') {
+            clientes[i].conta = clientes[i].conta + 40;
+        }
+    }
+
+    for (int i = 0; i < ex10_const; i++) {
+        if (clientes[i].paginas == 'S') {
+            printf("\n%s - %s usou %f hrs, como possuia pagina sua conta ficou em %f",clientes[i].codigo,clientes[i].email,clientes[i].horas,clientes[i].conta);
+        } else {
+            printf("\n%s - %s usou %f hrs e sua conta ficou em %f",clientes[i].codigo,clientes[i].email,clientes[i].horas,clientes[i].conta);
+        }
+        soma_valores = soma_valores + clientes[i].conta;
+    }
+
+    printf("\nO lucro total foi de %f",soma_valores);
+
 }
 
 void ex11() {
@@ -348,8 +548,33 @@ void ex13()  {
     
 }
 
+void ex14() {
+    TTempo inicio,fim,final;
+
+    puts("Coloque o horario do inicio do jogo HH:MM");
+    fflush(stdin);
+    scanf("%d:%d", &inicio.hour,&inicio.min);
+
+    puts("Coloque o horario do fim do jogo HH:MM");
+    fflush(stdin);
+    scanf("%d:%d", &fim.hour,&fim.min);
+
+    if( inicio.min > fim.min) {
+        fim.min = fim.min + 60;
+        fim.hour = fim.hour - 1;
+    }
+
+    if(inicio.hour > fim.hour) {
+        fim.hour = fim.hour + 24;
+    }
+    final.min = fim.min - inicio.min;
+    final.hour = fim.hour - inicio.hour;
+
+    printf("o jogo demorou %d horas e %d minutos", final.hour,final.min);
+}
+
 int main() {
-    ex7();
+    ex14();
 
     return 0;
 }
