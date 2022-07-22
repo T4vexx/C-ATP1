@@ -403,7 +403,11 @@ void ex8() {
 }
 
 void ex9() {
-    // Vou perguntar dpsss
+    /*
+        no primeiro bloco as informaçoes ficam mais dividadas podendo armazernar em espaços menores
+        no segundo bloco as informaçoes ficam mais juntas em um blocao assim precisa de uma espaço maior de armazenamento
+        porem as informaçoes sao mais faceis para ser encontradas e mais rapidamente
+    */
 }
 
 void ex10() {
