@@ -1,9 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <locale.h>
 
 #define m 500
 #define d 7
+#define linA 3
+#define colA 3
+#define linB 3
+#define colB 3
 
 void ex1() {
   int M[4][4],counter=0;
@@ -187,6 +192,253 @@ void ex6() {
 
 }
 
+void ex7() {
+  int M[4][4];
+  srand(time(NULL));
+
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      M[i][j] = (rand() % 20)+1;
+    }
+  }
+
+  printf("\nMatriz normal\n");
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      printf("[%d] ",M[i][j]);
+      if(j>i) {
+        M[i][j] = 0;
+      }
+    }
+    printf("\n");
+  }
+
+  printf("\nMatriz triangular\n");
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      printf("[%d] ",M[i][j]);
+    }
+    printf("\n");
+  }
+}
+
+void ex8() {
+  int cartela[5][5],valores[25]={0},numero,pos=0,flag;
+
+  for (int i = 0; i < 5; i++) {
+    for (int j = 0; j < 5; j++) {
+     if(pos==0) {
+      numero = rand() % 100;
+      valores[pos] = numero;
+      cartela[i][j] = numero;
+      pos++;
+     } else {
+      do {
+        flag=0;
+        numero = rand() % 100;
+        for (int k = 0; k < 25; k++) {
+          if(valores[k] == numero) {
+            flag = 1;
+          }
+        }
+      } while(flag==1);
+      valores[pos] = numero;
+      cartela[i][j] = numero;
+      pos++;
+     }
+    }
+  }
+
+  printf("\nCartela do bingo\n");
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      printf("[%d] ",cartela[i][j]);
+    }
+    printf("\n");
+  }
+}
+
+void ex9() {
+  char provas[5][10],gabarito[10]={'a','b','b','c','d','a','c','b','d','c'},resultado[5],counter=0; 
+  srand(time(NULL));
+
+  printf("\nRespostas: \n");
+  for(int i = 0; i < 5; i++) {
+    printf("Aluno %d\n",i+1);
+    for(int j = 0; j < 10; j++) {
+      provas[i][j] = (char)((rand() % 4) + 97); 
+      printf("[%c] ",provas[i][j]);
+    }
+    printf("\n");
+  }
+
+  for(int i = 0; i < 5; i++) {
+    counter = 0;
+    for(int j = 0; j < 10; j++) {
+      if (provas[i][j] == gabarito[j]) {
+        counter++;
+      }
+    }
+    resultado[i] = counter;
+  }
+
+  printf("\nResultado: \n");
+  for(int i = 0; i < 5; i++) {
+    printf("Desempeenho do aluno %d foi de %d\n",i+1,resultado[i]);
+  }
+
+}
+
+typedef struct Alunos {
+  char matricula[30];
+  char respostas[10];
+  int acertos;
+  char status;
+} Talunos;
+
+void ex10() {
+  char gabarito[10];
+  int counter;
+  Talunos alunos[3];
+  srand(time(NULL));
+
+  for (int i = 0; i < 10; i++) {
+    printf("Digite a resposta %d: ",i+1);
+    fflush(stdin);
+    scanf("%c", &gabarito[i]);
+  }
+
+  for (int i = 0; i < 3; i++) {
+    printf("Digite a matricula do aluno %d: ",i+1);
+    fflush(stdin);
+    scanf("%s",alunos[i].matricula);
+    for (int j = 0; j < 10; j++) {
+      alunos[i].respostas[j] = (char)((rand() % 5) + 97); 
+    }
+  }
+
+  for (int i = 0; i < 3; i++) {
+    counter = 0;
+    for (int j = 0; j < 10; j++) {
+      if (alunos[i].respostas[j] == gabarito[j]) {
+        counter++;
+      }
+    }
+    alunos[i].acertos = counter;
+    if (counter >= 7) {
+      alunos[i].status = 'A';
+    } else {
+      alunos[i].status = 'R';
+    }
+  }
+
+  printf("Alunos: \n");
+  for (int i = 0; i < 3; i++) {
+    printf("\nA matricula: %s\n",alunos[i].matricula);
+    for (int j = 0; j < 10; j++) {
+      printf("[%c] ",alunos[i].respostas[j]);
+    }
+    if(alunos[i].status == 'A') {
+      printf("\nO aluno foi aprovado com %.2f de aproveitameto",((float)alunos[i].acertos/10)*100);
+    } else {
+      printf("\nO aluno foi reprovado com %.2f de aproveitameto",((float)alunos[i].acertos/10)*100);
+    }
+  }
+
+}
+
+void ex11_12() {
+  int M1[4][4],M2[4][4],M3[4][4];
+
+  printf("Digite 32 numeros: \n");
+  for (int i = 0; i < 10; i++) {
+    for (int j = 0; j < 4; j++) {
+      if (i < 5) {
+        printf("Numero[%d][%d]: ",i,j);
+        fflush(stdin);
+        scanf("%d", &M1[i][j]);
+      } else {
+        printf("Numero[%d][%d]: ",i-5,j);
+        fflush(stdin);
+        scanf("%d", &M2[i-5][j]);
+      }
+    }
+  }
+
+  printf("\nMatriz 1: \n");
+  for(int i = 0; i < 4; i++) {
+    for(int j = 0; j < 4; j++) {
+      printf("[%d]",M1[i][j]);
+    }
+    printf("\n");
+  }
+
+  printf("\nMatriz 2: \n");
+  for(int i = 0; i < 4; i++) {
+    for(int j = 0; j < 4; j++) {
+      printf("[%d]",M2[i][j]);
+    }
+    printf("\n");
+  }
+
+  printf("\nMatriz Soma: \n");
+  for(int i = 0; i < 4; i++) {
+    for(int j = 0; j < 4; j++) {
+      M3[i][j] = M1[i][j] + M2[i][j];
+      printf("[%d]",M3[i][j]);
+    }
+    printf("\n");
+  }
+  
+
+}
+
+void ex13() {
+  int A[linA][colA],B[linB][colB],R[linA][colB]={0};
+  srand(time(NULL));
+
+  if (colA == linB) {
+    printf("\nInserçao de valores: \n");
+		for (int i=0; i<linA; i++) {
+			for (int j=0; j<colB; j++) {
+				A[i][j] = rand() % 10;
+        B[i][j] = rand() % 10;
+			}	
+		}
+
+    for (int i=0; i<linA; i++) {
+      for(int j=0; j<colB; j++) {
+        for(int k=0; k<colA; k++) {
+          R[i][j] = R[i][j] + A[i][k]*B[k][j];
+        }
+      }	
+    }
+
+    for (int i=0; i<3; i++) {
+			for (int j=0; j<3; j++) {
+				printf("[%d] ",A[i][j]);
+			}	
+      printf("\n");
+		}
+    printf("\n");
+    for (int i=0; i<3; i++) {
+			for (int j=0; j<3; j++) {
+				printf("[%d] ",B[i][j]);
+			}	
+      printf("\n");
+		}
+    printf("\n");
+    for (int i=0; i<3; i++) {
+			for (int j=0; j<3; j++) {
+				printf("[%d] ",R[i][j]);
+			}	
+      printf("\n");
+		}
+  } else {
+    printf("Tamanhos de matrizes incompativeis com a multiplicação");
+  }
+}
+
 void ex14_1(){
   int cities[d][d]={{0,2,11,6,15,11,1},{2,0,7,12,4,2,15},{11,7,0,11,8,3,13},{6,12,11,0,10,2,1},{15,4,8,10,0,5,13},{11,2,3,2,5,0,14},{1,15,13,1,13,14,0}},citya,cityb;
 
@@ -299,7 +551,9 @@ void ex24e25(){
 }
 
 int main() {
-  ex6();
+  setlocale(LC_ALL,"Portuguese");
+  
+  ex13();
 
   return 0;
 }
