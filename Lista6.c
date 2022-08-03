@@ -461,11 +461,11 @@ void ex14_2(){
 
     for(int y = 0; y < 7; y++){
       if(x==y){
-        printf(" \t ");
+        printf("\t");
       } else if (x>y) {
-        printf(" \t ");
+        printf("\t");
       } else {
-        printf(" \t%d",cities[x][y]);
+        printf("\t%d",cities[x][y]);
       }
       
     }
@@ -474,14 +474,276 @@ void ex14_2(){
 }
 
 void ex14_3(){
-  int cities[d][d]={{0,2,11,6,15,11,1},{2,0,7,12,4,2,15},{11,7,0,11,8,3,13},{6,12,11,0,10,2,1},{15,4,8,10,0,5,13},{11,2,3,2,5,0,14},{1,15,13,1,13,14,0}},cita,citb;
+  int cities[d][d]={{0,2,11,6,15,11,1},{2,0,7,12,4,2,15},{11,7,0,11,8,3,13},{6,12,11,0,10,2,1},{15,4,8,10,0,5,13},{11,2,3,2,5,0,14},{1,15,13,1,13,14,0}},destino,origem,total=0,flag=1;
 
-  // do{
-  //   if(cita==0 && citb==0){
-  //     printf("digite 2 valores de origem e destino: ");
-  //     scanf("%d %d")
-  //   }
-  // }while();
+  do{
+    if ( flag == 1 ) {
+      do {
+        printf("Digite o valor de origem: ");
+        fflush(stdin);
+        scanf("%d", &origem);
+
+        if (origem < 0 || origem > 6) {
+          printf("\nCidade nao cadastrada");
+        }
+      } while (origem < 0 || origem > 6);
+      flag=0;
+    } else {
+      origem = destino;
+    }
+
+    do {
+      printf("\nDigite o valor de destino: ");
+      fflush(stdin);
+      scanf("%d", &destino);
+
+      if (destino < 0 || destino > 6) {
+        printf("\nCidade nao cadastrada");
+      }
+    } while (destino < 0 || destino > 6);
+
+    if (origem != destino) {
+      printf("\nO tempo parcial é %d",cities[origem][destino]);
+      total = total + cities[origem][destino];
+    }
+
+  }while(origem != destino);
+
+  printf("\nO tempo total e de: %d",total);
+}
+
+void ex14_4() {
+  int cities[d][d]={{0,2,11,6,15,11,1},{2,0,7,12,4,2,15},{11,7,0,11,8,3,13},{6,12,11,0,10,2,1},{15,4,8,10,0,5,13},{11,2,3,2,5,0,14},{1,15,13,1,13,14,0}};
+  int destino,origem,des1,des2;
+
+  printf("Digite os codigos das 4 cidades sendo o primeiro origem e o ultimo destino: \n");
+  fflush(stdin);
+  scanf("%d %d %d %d",&origem,&des1,&des2,&destino);
+
+  if((cities[origem][des1]+cities[des1][destino])< (cities[origem][des2]+cities[des2][destino])) {
+    printf("\nO percurso com o menor tempo total й o que se usa a primeira opcao de pernoite:");
+    printf("\nOrigem -- %d -- Primeira op. pernoite -- %d: Tempo %d", origem, des1, cities[origem][des1]);
+    printf("\nPrimeira op. pernoite -- %d -- Destino -- %d: Tempo %d ",des1,destino,cities[des1][destino]);;
+    printf("\nTempo total: %d",cities[origem][des1]+cities[des1][destino]);
+  } else if ((cities[origem][des1]+cities[des1][destino])==(cities[origem][des2]+cities[des2][destino])) {
+    printf("Ambos os percursos tem o mesmo tempo final de %d ",(cities[origem][des1]+cities[des1][destino]));
+  } else {
+    printf("\nO percurso com o menor tempo total й o que se usa a segunda opзгo de pernoite:");
+    printf("\nOrigem -- %d -- Segunda op. pernoite -- %d: Tempo %d\n", origem, des2, cities[origem][des2]);
+    printf("\nSegunda op. pernoite -- %d -- Destino -- %d: Tempo %d\n",des2,destino,cities[des2][destino]);;
+    printf("\nTempo total: %d",cities[origem][des2]+cities[des2][destino]);
+  }
+  //15 -  2 e 3 - 
+}
+
+void ex15() {
+  int B[100][200],somaCol=0,somaLin=0;
+  srand(time(NULL));
+
+  for ( int i = 0; i < 100; i++) {
+    for (int j = 0; j < 200; j++) {
+      B[i][j] = (rand() % 10) + 1;
+    }
+  }
+
+  for ( int i = 0; i < 100; i++) {
+    for (int j = 0; j < 200; j++) {
+      if (j == 40) {
+        somaCol = somaCol + B[i][40];
+      }
+      if (i == 30) {
+        somaLin = somaLin + B[30][j];
+      }
+    }
+  }
+
+  printf("A soma da 40 coluna e %d",somaCol);
+  printf("\nA soma da 30 linha e %d", somaLin);
+}
+
+void ex16() {
+  int M[2][3],MT[3][2]={0};
+  srand(time(NULL));
+
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      M[i][j] = (rand() % 10) + 1;
+      printf("[%d] ",M[i][j]);
+    }
+    printf("\n");
+  }
+
+  printf("\nMatriz Transposta \n");
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 2; j++) {
+      MT[i][j] = M[j][i];
+    }
+  }
+
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 2; j++) {
+      printf("[%d] ",MT[i][j]);
+    }
+    printf("\n");
+  }
+  
+}
+
+void ex19() {
+  int M[3][6],somaI=0,counter=0;
+  float media=0;
+  srand(time(NULL));
+
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 6; j++) {
+      M[i][j] = (rand() % 10) + 1;
+      printf("[%d] ",M[i][j]);
+
+      if ((j+1)%2 != 0) {
+        somaI = somaI + M[i][j];
+      }
+
+      if (j==1 || j==3) {
+        media = media + M[i][j];
+        counter++;
+      }
+    }
+    printf("\n");
+  }
+
+  //a)
+  printf("\nSoma de todas as col impares...: %d", somaI);  
+
+  //b)
+  printf("\nMedia das colunas 2 e 4...: %.2f",media/counter);
+
+  //c) e d) 
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 6; j++) {
+      if (j == 5) {
+        M[i][5] = M[i][0] + M[i][1];
+      }
+    }
+  }
+  printf("\nMatriz modificada\n");
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 6; j++) {
+      printf("[%d] ",M[i][j]);
+    }
+    printf("\n");
+  }
+
+}
+
+void ex20() {
+  int M1[2][2],M2[2][2],M3[2][2]={0},constante;
+  char opcao;
+
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 2; j++) {
+      M1[i][j] = (rand() % 10) + 1;
+      M2[i][j] = (rand() % 10) + 1;
+    }
+  }
+
+  do {
+    printf("\n\t\tOpçoes para o programa");
+    printf("\na)Somar as duas matrizes");
+    printf("\nb)subtrair a primeira na segunda");
+    printf("\nc)Adicionar uma constante as duas matrizes");
+    printf("\nd)Imprimir as matrizes");
+    printf("\ne)Sair\n");
+    do {
+      scanf("%c",&opcao);
+    } while(opcao != 'a' && opcao != 'b' && opcao != 'c' && opcao != 'd' && opcao != 'e');
+  
+    if (opcao == 'a') {
+      for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+          M3[i][j] = M1[i][j] + M2[i][j];
+        }
+      }
+    } else if (opcao == 'b') {
+      for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+          M3[i][j] = M2[i][j] - M1[i][j];
+        }
+      }
+    } else if (opcao == 'c') {
+      printf("\nEscolha o valor da constante");
+      scanf(" %d",&constante);
+
+      for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+          M1[i][j] = M1[i][j] + constante;
+          M2[i][j] = M2[i][j] + constante;
+        }
+      }
+    } else if (opcao == 'd') {
+      printf("\nMatriz 1\n");
+      for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+         printf("[%d] ",M1[i][j]);
+        }
+        printf("\n");
+      }
+
+      printf("\nMatriz 2\n");
+      for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+         printf("[%d] ",M2[i][j]);
+        }
+        printf("\n");
+      }
+
+      printf("\nMatriz 3\n");
+      for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+         printf("[%d] ",M3[i][j]);
+        }
+        printf("\n");
+      }
+    }
+
+  }while(opcao != 'e');
+  
+}
+
+void ex21() {
+  /* Feito mentalmente */
+}
+
+void ex22() {
+  int i,vet_i[10],m_i[10][10];
+  float f,vet_f[10],m_f[10][10];
+  char c,vet_c[10],m_c[10][10];
+  double dou,vet_d[10],m_d[10][10];
+
+  
+}
+
+void bubbleSort() {
+  int vet[6]={5,3,6,4,3,2};
+  int i,j,aux;
+
+  for(int i = 0; i<6; i++) {
+    printf("%d ",vet[i]);
+  }
+  printf("\n");
+  for (i = 5; i>=0; i--) {
+    for (j = 0; j < i; j++) {
+      if(vet[j]>vet[j+1]) {
+        aux = vet[j];
+        vet[j] = vet[j+1];      
+        vet[j+1] = aux;
+      }
+    }
+  }
+
+  for(int i = 0; i<6; i++) {
+    printf("%d ",vet[i]);
+  }
+
 }
 
 void desafio1() {
@@ -552,8 +814,8 @@ void ex24e25(){
 
 int main() {
   setlocale(LC_ALL,"Portuguese");
-  
-  ex13();
+
+  bubbleSort();
 
   return 0;
 }
